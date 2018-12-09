@@ -1,0 +1,1 @@
+python3 /var/www/socialmedia/py_script/get_tweets.py
