@@ -7,10 +7,7 @@
 </head>
 <body>
     <div>
-        Links: 
-        <a href="/tweets">Tweets</a> | 
-        <a href="/tweet_account">Tweet Account</a> |
-        <a href="/normalization">Normalization</a>
+        <a href="/">&lt; back</a>
     </div>
     <h1>Tweets</h1>
 

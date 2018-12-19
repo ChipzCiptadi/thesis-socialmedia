@@ -1,3 +1,9 @@
+# -*- coding: utf-8 -*-
+
+#######################################
+# project url: http://128.199.95.245/ #
+#######################################
+
 # import libraries
 import tweepy
 import io
@@ -39,6 +45,18 @@ def remove_stop_words(text):
     tokens = word_tokenize(text)
     return ' '.join([w for w in tokens if not w in stopwords])
 
+# normalize words
+def normalize(text):
+    with open('/var/www/socialmedia/py_script/normalize_words.txt', 'r') as f:
+        while True:
+            line = f.readline()
+            if not line:
+                break
+            word = line.strip('\n').split(',')
+            text = re.sub(r"\b%s\b" % word[0], word[1], text)
+
+    return text
+
 # stemming in action
 def stem(text):
     from Sastrawi.Stemmer.StemmerFactory import StemmerFactory
@@ -62,6 +80,7 @@ for (acc_id, screen_name, last_tweet_id) in cursor_ddl:
     for tweet in tweepy.Cursor(api.search, q="@{} -filter:retweets".format(screen_name), lang="id", since_id=last_tweet_id, result_type="recent", tweet_mode="extended").items(100):
         query_insert = "INSERT INTO tweets (tweet_id, screen_name, full_text, full_text_clean, tweet_created_at, in_reply_to_status_id, in_reply_to_user_id, is_reply, retweet_count, favorite_count) VALUES (%s,%s,%s,%s,%s + INTERVAL 7 HOUR,%s,%s,%s,%s,%s)"
         full_text_clean = clean(tweet.full_text)
+        full_text_clean = normalize(full_text_clean)
         full_text_clean = stem(full_text_clean)
         full_text_clean = remove_stop_words(full_text_clean)
         try:
