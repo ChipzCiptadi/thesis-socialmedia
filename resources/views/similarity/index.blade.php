@@ -12,14 +12,11 @@
             <li>Step 1: <a href="https://scikit-learn.org/stable/modules/generated/sklearn.feature_extraction.text.TfidfVectorizer.html" target="_blank">TF-IDF</a> untuk konversi teks ke document term matrix</li>
             <li>Step 2: <a href="https://scikit-learn.org/stable/modules/generated/sklearn.metrics.pairwise.cosine_similarity.html" target="_blank">cosine similarity</a> untuk mendapatkan similarity result nya</li>
             <li>Step 3: ulangi step 2 untuk setiap tweet dalam batch</li>
-            <li>Matrix tidak bisa show terlalu banyak data, kalau tweet terlalu banyak maka bisa error page</li>
         </ul>
     </div>
 
     <div class="jumbotron">
         <form action="/similarity" method="get">
-            @method('GET')
-            @csrf
             <div class="form-group">
                 <label for="batch">Batch Number</label>
                 <select class="form-control" name="batch" id="batch">
@@ -27,6 +24,10 @@
                     <option value="{{ $batch->batch }}" {{ ($batch->batch == $current_batch) ? 'selected' : '' }}>{{ $batch->batch }}</option>
                     @endforeach
                 </select>
+            </div>
+            <div class="form-check">
+                <input type="checkbox" class="form-check-input" name="hide_exact" id="hide_exact" {{ ($hide_exact == 'on') ? 'checked' : '' }}>
+                <label class="form-check-label" for="hide_exact">Hide similarity = 1.0</label>
             </div>
             <button type="submit" class="btn btn-primary btn-sm">Go</button>
         </form>
