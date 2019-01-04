@@ -5,7 +5,7 @@ connection = pymysql.connect(user="nurul", password="nurul", host="127.0.0.1", d
 
 cursor = connection.cursor()
 
-sql = 'select abnormal, normal from normalizations'
+sql = 'select abnormal, normal from normalization'
 # sql = 'select abnormal, normal from normalization'
 cursor.execute(sql)
 
