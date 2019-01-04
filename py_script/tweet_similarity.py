@@ -2,6 +2,7 @@
 # NOTE: Must be executed AFTER executing get_tweets.py
 
 import pymysql
+import sys
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
@@ -22,35 +23,36 @@ query_ddl = """
         LIMIT 1
     ) as batch_tweet ON batch_tweet.batch=tweets.batch
 """
-cursor_ddl.execute(query_ddl)
+numrows = cursor_ddl.execute(query_ddl)
 
-tweet_texts = []
-tweet_ids = []
-tweet_batch = 0
-for (tweet_id, full_text_clean, batch) in cursor_ddl:
-    tweet_texts.append(full_text_clean)
-    tweet_ids.append(tweet_id)
-    tweet_batch = batch
+if numrows > 0:
+    tweet_texts = []
+    tweet_ids = []
+    tweet_batch = 0
+    for (tweet_id, full_text_clean, batch) in cursor_ddl:
+        tweet_texts.append(full_text_clean)
+        tweet_ids.append(tweet_id)
+        tweet_batch = batch
 
-# convert documents into BoW using TFIDF
-vectorizer = TfidfVectorizer()
-matrix = vectorizer.fit_transform(tweet_texts)
+    # convert documents into BoW using TFIDF
+    vectorizer = TfidfVectorizer()
+    matrix = vectorizer.fit_transform(tweet_texts)
 
-# get similarities
-for i in range(matrix.shape[0]):
-    similarity = cosine_similarity(matrix[i], matrix)
+    # get similarities
+    for i in range(matrix.shape[0]):
+        similarity = cosine_similarity(matrix[i], matrix)
 
-    for j in range(similarity.shape[1]):
-        cursor_dml.execute(query_similarity, (
-            tweet_batch, 
-            tweet_ids[i], 
-            tweet_ids[j], 
-            float(round(similarity[0,j], 6))
-        ))
+        for j in range(similarity.shape[1]):
+            cursor_dml.execute(query_similarity, (
+                tweet_batch, 
+                tweet_ids[i], 
+                tweet_ids[j], 
+                float(round(similarity[0,j], 6))
+            ))
 
-    connection.commit()
+        connection.commit()
 
-print('done')
+    print('done')
 
 # close connection
 cursor_dml.close()
