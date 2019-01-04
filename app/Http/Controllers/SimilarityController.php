@@ -14,7 +14,8 @@ class SimilarityController extends Controller
         $batch = $request->input('batch');
         if (!$batch)
         {
-            $batch = Similarity::orderBy('batch', 'desc')->take(1)->select('batch')->first()->batch;
+            $batch = Similarity::orderBy('batch', 'desc')->take(1)->select('batch')->first();
+            $batch = ($batch) ? $batch->batch : 0;
         }
 
         $batches = Similarity::orderBy('batch','desc')->select('batch')->distinct()->get();
