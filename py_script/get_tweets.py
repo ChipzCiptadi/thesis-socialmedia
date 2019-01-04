@@ -4,6 +4,8 @@
 # project url: http://128.199.95.245/ #
 #######################################
 
+print('executing script: get_tweets.py')
+
 # import libraries
 import tweepy
 import io
@@ -125,3 +127,6 @@ for (acc_id, screen_name, last_tweet_id) in cursor_ddl:
 cursor_dml.close()
 cursor_ddl.close()
 connection.close()
+
+print('done')
+print('')

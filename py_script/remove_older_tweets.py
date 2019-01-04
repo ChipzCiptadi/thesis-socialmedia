@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+print('executing script: remove_older_tweets.py')
+
 import pymysql
 
 connection = pymysql.connect(host='localhost', user='nurul', password='nurul', db='socialmedia', charset='utf8')
@@ -10,3 +12,6 @@ with connection.cursor() as cursor:
 connection.commit()
 
 print('deleted tweets older than 3 days')
+
+print('done')
+print('')

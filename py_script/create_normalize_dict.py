@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+print('executing script: create_normalize_dict.py')
+
 import pymysql
 
 connection = pymysql.connect(user="nurul", password="nurul", host="127.0.0.1", database="socialmedia", charset='utf8')
@@ -17,3 +19,6 @@ for (abnormal, normal) in cursor:
 out_file.close()
 cursor.close()
 connection.close()
+
+print('done')
+print('')

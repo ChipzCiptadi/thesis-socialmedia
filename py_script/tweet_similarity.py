@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 # NOTE: Must be executed AFTER executing get_tweets.py
+print('executing script: tweet_similarity.py')
 
 import pymysql
 import sys
@@ -52,9 +53,10 @@ if numrows > 0:
 
         connection.commit()
 
-    print('done')
-
 # close connection
 cursor_dml.close()
 cursor_ddl.close()
 connection.close()
+
+print('done')
+print('')
