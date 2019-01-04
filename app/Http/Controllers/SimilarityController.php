@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Similarity;
-use App\Tweet;
 use Illuminate\Http\Request;
 
 class SimilarityController extends Controller
@@ -24,18 +23,15 @@ class SimilarityController extends Controller
                                     ->orderBy('first_tweet_id', 'asc')
                                     ->orderBy('similarity', 'desc')
                                     ->get();
-        $similarities_distinct = Similarity::where('batch', $batch)
+        $row_count = Similarity::where('batch', $batch)
                                     ->where('similarity','>=',0.5)
-                                    ->select('first_tweet_id')
-                                    ->distinct()
-                                    ->get();
-        $row_count = count($similarities_distinct);
+                                    ->distinct('first_tweet_id')
+                                    ->count();
         
         return view('similarity.index', [
             'current_batch' => $batch,
             'batches' => $batches, 
             'similarities' => $similarities, 
-            'similarities_distinct' => $similarities_distinct,
             'row_count' => $row_count
         ]);
     }

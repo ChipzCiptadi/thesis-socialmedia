@@ -32,30 +32,10 @@
         </form>
     </div>
 
-    <h3>Tweets</h3>
+    <h3>Similarities</h3>
     <div>
         Total: <strong>{{ $row_count }}</strong> tweets
     </div>
-    <table class="table table-hover table-sm">
-        <thead>
-            <tr>
-                <th>Tweet ID</th>
-                <th>Text clean</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($similarities_distinct as $similarity)
-            <tr>
-                <td>{{ $similarity->tweet->tweet_id }}</td>
-                <td>{{ $similarity->tweet->full_text_clean }}</td>
-            </tr>
-            @endforeach
-        </tbody>
-    </table>
-
-    <hr>
-
-    <h3>Similarities</h3>
     <div>
         Note: similarity value yang di bold adalah yang value nya >= 0.5
     </div>
@@ -75,17 +55,17 @@
 
             @foreach ($similarities as $similarity)
                 @if ($last_tweet_id != $similarity->first_tweet_id)
-                <tr class="table-primary">
-                    <td colspan="4"></td>
-                </tr>
+                    <tr class="table-primary">
+                        <td colspan="4"></td>
+                    </tr>
                     @php
-                    $last_tweet_id = $similarity->first_tweet_id
+                        $last_tweet_id = $similarity->first_tweet_id
                     @endphp
                 @endif
                 <tr>
                     <td>{{ $similarity->batch}}</td>
-                    <td>{{ $similarity->first_tweet_id }}</td>
-                    <td>{{ $similarity->second_tweet_id }}</td>
+                    <td><abbr title="{{ $similarity->first_tweet->full_text_clean }}">{{ $similarity->first_tweet_id }}</abbr></td>
+                    <td><abbr title="{{ $similarity->second_tweet->full_text_clean }}">{{ $similarity->second_tweet_id }}</abbr></td>
                     <td>{{ $similarity->similarity }}</td>
                 </tr>
             @endforeach
