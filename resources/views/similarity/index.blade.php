@@ -34,7 +34,7 @@
 
     <h3>Tweets</h3>
     <div>
-        Total: <strong>{{ count($tweets) }}</strong> tweets
+        Total: <strong>{{ $row_count }}</strong> tweets
     </div>
     <table class="table table-hover table-sm">
         <thead>
@@ -44,10 +44,10 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($tweets as $tweet)
+            @foreach ($similarities as $similarity)
             <tr>
-                <td>{{ $tweet->tweet_id }}</td>
-                <td>{{ $tweet->full_text_clean }}</td>
+                <td>{{ $similarity->tweet->tweet_id }}</td>
+                <td>{{ $similarity->tweet->full_text_clean }}</td>
             </tr>
             @endforeach
         </tbody>
@@ -59,30 +59,36 @@
     <div>
         Note: similarity value yang di bold adalah yang value nya >= 0.5
     </div>
-    <table class="table table-striped table-hover table-bordered table-responsive">
+    <table class="table table-hover table-bordered">
         <thead>
             <tr>
-                <th>Tweet</th>
-                @for ($i = 0; $i < $row_count; $i++)
-                <th><p style="writing-mode:vertical-rl;">{{ $similarities[$i]->second_tweet_id }}</p></th>
-                @endfor
+                <th>Batch</th>
+                <th>Tweet ID</th>
+                <th>Tweet ID compared</th>
+                <th>Similarity</th>
             </tr>
         </thead>
         <tbody>
-            @for ($row = 0; $row < $row_count; $row++)
-            <tr>
-                <th>{{ $similarities[$row * $row_count]->first_tweet_id }}</th>
-                @for ($column = 0; $column < $row_count; $column++)
-                <td>
-                    @if ($similarities[($row * $row_count) + $column]->similarity >= 0.5)
-                    <strong>{{ $similarities[($row * $row_count) + $column]->similarity }}</strong>
-                    @else
-                    {{ $similarities[($row * $row_count) + $column]->similarity }}
-                    @endif
-                </td>
-                @endfor
-            </tr>
-            @endfor
+            @php
+                $last_tweet_id = 0
+            @endphp
+
+            @foreach ($similarities as $similarity)
+                @if ($last_tweet_id != $similarity->first_tweet_id)
+                <tr class="table-primary">
+                    <td colspan="4"></td>
+                </tr>
+                    @php
+                    $last_tweet_id = $similarity->first_tweet_id
+                    @endphp
+                @endif
+                <tr>
+                    <td>{{ $similarity->batch}}</td>
+                    <td>{{ $similarity->first_tweet_id }}</td>
+                    <td>{{ $similarity->second_tweet_id }}</td>
+                    <td>{{ $similarity->similarity }}</td>
+                </tr>
+            @endforeach
         </tbody>
     </table>
 

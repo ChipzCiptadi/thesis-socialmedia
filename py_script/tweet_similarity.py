@@ -44,12 +44,13 @@ if numrows > 0:
         similarity = cosine_similarity(matrix[i], matrix)
 
         for j in range(similarity.shape[1]):
-            cursor_dml.execute(query_similarity, (
-                tweet_batch, 
-                tweet_ids[i], 
-                tweet_ids[j], 
-                float(round(similarity[0,j], 6))
-            ))
+            if similarity[0,j] >= 0.5:
+                cursor_dml.execute(query_similarity, (
+                    tweet_batch, 
+                    tweet_ids[i], 
+                    tweet_ids[j], 
+                    float(round(similarity[0,j], 6))
+                ))
 
         connection.commit()
 

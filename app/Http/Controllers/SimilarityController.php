@@ -19,15 +19,17 @@ class SimilarityController extends Controller
         }
 
         $batches = Similarity::orderBy('batch','desc')->select('batch')->distinct()->get();
-        $similarities = Similarity::where('batch', $batch)->orderBy('first_tweet_id', 'asc')->orderBy('second_tweet_id', 'asc')->get();
-        $tweets = Tweet::where('batch', $batch)->orderBy('tweet_id', 'asc')->get();
-        $row_count = count($tweets);
+        $similarities = Similarity::where('batch', $batch)
+                                    ->where('similarity','>=',0.5)
+                                    ->orderBy('first_tweet_id', 'asc')
+                                    ->orderBy('similarity', 'desc')
+                                    ->get();
+        $row_count = count($similarities);
         
         return view('similarity.index', [
             'current_batch' => $batch,
             'batches' => $batches, 
             'similarities' => $similarities, 
-            'tweets' => $tweets, 
             'row_count' => $row_count
         ]);
     }
