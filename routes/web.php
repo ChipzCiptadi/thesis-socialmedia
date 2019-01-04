@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('index');
 });
 
 Route::delete('/tweet_account/{id}', 'TweetAccountController@destroy');
@@ -25,3 +25,5 @@ Route::get('/tweets', 'TweetController@index');
 Route::delete('/normalization/{id}', 'NormalizationController@destroy');
 Route::post('/normalization', 'NormalizationController@store');
 Route::get('/normalization', 'NormalizationController@index');
+
+Route::get('/similarity', 'SimilarityController@index');
