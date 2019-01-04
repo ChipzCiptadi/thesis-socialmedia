@@ -32,6 +32,9 @@
     </div>
 
     <h3>Tweets</h3>
+    <div>
+        Total: <strong>{{ count($tweets) }}</strong> tweets
+    </div>
     <table class="table table-hover table-sm">
         <thead>
             <tr>
