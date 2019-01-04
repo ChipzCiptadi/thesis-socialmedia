@@ -9,7 +9,7 @@ class TweetController extends Controller
 {
     public function index()
     {
-        $data = Tweet::orderBy('tweet_id', 'desc')->take(100)->get();
+        $data = Tweet::orderBy('tweet_id', 'desc')->simplePaginate(100);
         $count = Tweet::count();
         return view('tweets.index', ['data' => $data, 'count' => $count]);
     }

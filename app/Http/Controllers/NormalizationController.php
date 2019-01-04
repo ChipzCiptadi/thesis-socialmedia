@@ -10,7 +10,7 @@ class NormalizationController extends Controller
 {
     public function index()
     {
-        $data = Normalization::orderBy('id', 'desc')->take(100)->get();
+        $data = Normalization::orderBy('id', 'desc')->simplePaginate(100);
         $count = Normalization::count();
         $random_tweets = Tweet::inRandomOrder()->take(5)->get();
         return view('normalization.index', ['data' => $data, 'count' => $count, 'random_tweets' => $random_tweets]);
