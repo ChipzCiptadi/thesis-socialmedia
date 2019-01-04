@@ -12,6 +12,7 @@
             <li>Step 1: <a href="https://scikit-learn.org/stable/modules/generated/sklearn.feature_extraction.text.TfidfVectorizer.html" target="_blank">TF-IDF</a> untuk konversi teks ke document term matrix</li>
             <li>Step 2: <a href="https://scikit-learn.org/stable/modules/generated/sklearn.metrics.pairwise.cosine_similarity.html" target="_blank">cosine similarity</a> untuk mendapatkan similarity result nya</li>
             <li>Step 3: ulangi step 2 untuk setiap tweet dalam batch</li>
+            <li>Matrix tidak bisa show terlalu banyak data, kalau tweet terlalu banyak maka bisa error page</li>
         </ul>
     </div>
 
@@ -23,7 +24,7 @@
                 <label for="batch">Batch Number</label>
                 <select class="form-control" name="batch" id="batch">
                     @foreach ($batches as $batch)
-                    <option value="{{ $batch->batch }}">{{ $batch->batch }}</option>
+                    <option value="{{ $batch->batch }}" {{ ($batch->batch == $current_batch) ? 'selected' : '' }}>{{ $batch->batch }}</option>
                     @endforeach
                 </select>
             </div>

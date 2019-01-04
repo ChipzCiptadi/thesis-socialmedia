@@ -24,6 +24,7 @@ class SimilarityController extends Controller
         $row_count = count($tweets);
         
         return view('similarity.index', [
+            'current_batch' => $batch,
             'batches' => $batches, 
             'similarities' => $similarities, 
             'tweets' => $tweets, 
