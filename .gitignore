@@ -13,3 +13,4 @@ yarn-error.log
 .env
 .phpunit.result.cache
 /py_script/normalize_words.txt
+/py_script/local/*
