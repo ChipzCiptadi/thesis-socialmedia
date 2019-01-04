@@ -11,8 +11,8 @@ class SimilarityController extends Controller
     {
         // get latest batch number
         $batch = $request->input('batch');
-        $hide_exact = $request->input('hide_exact');
-        $operand = '<=';
+        $show_exact = $request->input('show_exact');
+        $operand = '<';
 
         if (!$batch)
         {
@@ -20,9 +20,9 @@ class SimilarityController extends Controller
             $batch = ($batch) ? $batch->batch : 0;
         }
 
-        if ($hide_exact != null && $hide_exact == 'on')
+        if ($show_exact != null && $show_exact == 'on')
         {
-            $operand = '<';
+            $operand = '<=';
         }
 
         $batches = Similarity::orderBy('batch','desc')->select('batch')->distinct()->get();
@@ -40,7 +40,7 @@ class SimilarityController extends Controller
         
         return view('similarity.index', [
             'current_batch' => $batch,
-            'hide_exact' => $hide_exact,
+            'show_exact' => $show_exact,
             'batches' => $batches, 
             'similarities' => $similarities, 
             'row_count' => $row_count

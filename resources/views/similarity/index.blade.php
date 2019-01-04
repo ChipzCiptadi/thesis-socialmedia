@@ -26,8 +26,8 @@
                 </select>
             </div>
             <div class="form-check">
-                <input type="checkbox" class="form-check-input" name="hide_exact" id="hide_exact" {{ ($hide_exact == 'on') ? 'checked' : '' }}>
-                <label class="form-check-label" for="hide_exact">Hide similarity = 1.0</label>
+                <input type="checkbox" class="form-check-input" name="show_exact" id="show_exact" {{ ($show_exact == 'on') ? 'checked' : '' }}>
+                <label class="form-check-label" for="show_exact">Show similarity = 1.0</label>
             </div>
             <button type="submit" class="btn btn-primary btn-sm">Go</button>
         </form>
