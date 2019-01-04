@@ -63,7 +63,6 @@ def stem(text):
 
     return StemmerFactory().create_stemmer().stem(text)
 
-
 # DB Connection
 connection = pymysql.connect(user="nurul", password="nurul", host="127.0.0.1", database="socialmedia", charset='utf8')
 cursor_ddl = connection.cursor()
@@ -73,12 +72,20 @@ cursor_dml = connection.cursor()
 query_ddl = "SELECT id, screen_name, last_tweet_id FROM tweet_account WHERE is_active=1"
 cursor_ddl.execute(query_ddl)
 
+# get last batch
+last_batch = 0
+with connection.cursor() as cursor_temp:
+    cursor_temp.execute("SELECT batch FROM `tweets` ORDER BY batch DESC LIMIT 1")
+    x = cursor_temp.fetchone()
+    last_batch = x[0] if x is not None else 0
+
+# for each account in tweet_account
 for (acc_id, screen_name, last_tweet_id) in cursor_ddl:
 
     print('Mentioned:', screen_name, end=" ", flush=True)
     tweet_id = 0
     for tweet in tweepy.Cursor(api.search, q="@{} -filter:retweets".format(screen_name), lang="id", since_id=last_tweet_id, result_type="recent", tweet_mode="extended").items(100):
-        query_insert = "INSERT INTO tweets (tweet_id, screen_name, full_text, full_text_clean, tweet_created_at, in_reply_to_status_id, in_reply_to_user_id, is_reply, retweet_count, favorite_count) VALUES (%s,%s,%s,%s,%s + INTERVAL 7 HOUR,%s,%s,%s,%s,%s)"
+        query_insert = "INSERT INTO tweets (tweet_id, screen_name, full_text, full_text_clean, tweet_created_at, in_reply_to_status_id, in_reply_to_user_id, is_reply, retweet_count, favorite_count, batch) VALUES (%s,%s,%s,%s,%s + INTERVAL 7 HOUR,%s,%s,%s,%s,%s,%s)"
         full_text_clean = clean(tweet.full_text)
         full_text_clean = normalize(full_text_clean)
         full_text_clean = stem(full_text_clean)
@@ -94,7 +101,8 @@ for (acc_id, screen_name, last_tweet_id) in cursor_ddl:
                 tweet.in_reply_to_user_id_str,
                 1 if tweet.in_reply_to_status_id_str or tweet.in_reply_to_user_id_str else 0,
                 tweet.retweet_count,
-                tweet.favorite_count
+                tweet.favorite_count,
+                last_batch + 1
             ))
 
             tweet_id = tweet.id
@@ -110,7 +118,7 @@ for (acc_id, screen_name, last_tweet_id) in cursor_ddl:
     connection.commit()
     print('saved')
 
-
+# close connection
 cursor_dml.close()
 cursor_ddl.close()
 connection.close()
