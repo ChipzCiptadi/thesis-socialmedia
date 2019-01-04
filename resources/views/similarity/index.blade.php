@@ -44,7 +44,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($similarities as $similarity)
+            @foreach ($similarities_distinct as $similarity)
             <tr>
                 <td>{{ $similarity->tweet->tweet_id }}</td>
                 <td>{{ $similarity->tweet->full_text_clean }}</td>
