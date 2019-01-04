@@ -75,9 +75,12 @@ cursor_ddl.execute(query_ddl)
 # get last batch
 last_batch = 0
 with connection.cursor() as cursor_temp:
-    cursor_temp.execute("SELECT batch FROM `tweets` ORDER BY batch DESC LIMIT 1")
-    x = cursor_temp.fetchone()
-    last_batch = x[0] if x is not None else 0
+    num_row = cursor_temp.execute("SELECT batch FROM `tweets` ORDER BY batch DESC LIMIT 1")
+    if num_row > 0:
+        last_batch = cursor_temp.fetchone()[0]
+    
+if last_batch is None:
+    last_batch = 0
 
 # for each account in tweet_account
 for (acc_id, screen_name, last_tweet_id) in cursor_ddl:
@@ -107,7 +110,7 @@ for (acc_id, screen_name, last_tweet_id) in cursor_ddl:
 
             tweet_id = tweet.id
         except Exception as e:
-            with open('error.log', 'a') as logf:
+            with open('/var/www/thesis-socialmedia/py_script/error.log', 'a') as logf:
                 logf.write("{} - {}|{}".format(datetime.datetime.now(), screen_name, str(e)))
                 pass
             pass

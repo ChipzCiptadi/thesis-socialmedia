@@ -39,7 +39,7 @@ def clean(text):
 # remove stop-words
 def remove_stop_words(text):
     from nltk.tokenize import word_tokenize
-    with open('/var/www/socialmedia/py_script/id.stopwords.txt', 'r') as f:
+    with open('id.stopwords.txt', 'r') as f:
         stopwords = f.readlines()
     stopwords = [w.strip('\n') for w in stopwords]
     tokens = word_tokenize(text)
@@ -47,7 +47,7 @@ def remove_stop_words(text):
 
 # normalize words
 def normalize(text):
-    with open('/var/www/socialmedia/py_script/normalize_words.txt', 'r') as f:
+    with open('normalize_words.txt', 'r') as f:
         while True:
             line = f.readline()
             if not line:

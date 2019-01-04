@@ -9,7 +9,7 @@ cursor = connection.cursor()
 sql = 'select abnormal, normal from normalization'
 cursor.execute(sql)
 
-out_file = open('/var/www/socialmedia/py_script/normalize_words.txt','w')
+out_file = open('normalize_words.txt','w')
 
 for (abnormal, normal) in cursor:
     out_file.write("{},{}\n".format(abnormal, normal))
