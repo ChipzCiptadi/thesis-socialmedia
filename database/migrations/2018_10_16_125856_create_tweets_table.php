@@ -20,7 +20,7 @@ class CreateTweetsTable extends Migration
             $table->string('full_text_clean', 300)->nullable();
             $table->dateTime('tweet_created_at');
             $table->string('in_reply_to_status_id', 30)->nullable();
-            $table->string('in_reply_to_user_id', 15)->nullable();
+            $table->string('in_reply_to_user_id', 30)->nullable();
             $table->tinyInteger('is_reply');
             $table->unsignedSmallInteger('retweet_count');
             $table->unsignedSmallInteger('favorite_count');
