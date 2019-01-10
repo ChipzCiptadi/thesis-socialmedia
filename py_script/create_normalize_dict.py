@@ -2,8 +2,9 @@
 print('executing script: create_normalize_dict.py')
 
 import pymysql
+from credentials import DB_HOSTNAME, DB_NAME, DB_PASSWORD, DB_USERNAME
 
-connection = pymysql.connect(user="nurul", password="nurul", host="127.0.0.1", database="socialmedia", charset='utf8')
+connection = pymysql.connect(user=DB_USERNAME, password=DB_PASSWORD, host=DB_HOSTNAME, database=DB_NAME, charset='utf8')
 
 cursor = connection.cursor()
 
