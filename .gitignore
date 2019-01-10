@@ -16,3 +16,4 @@ yarn-error.log
 /py_script/normalize_words.txt
 /py_script/local/*
 /py_script/credentials.py
+/py_script/error.log
