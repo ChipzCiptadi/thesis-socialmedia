@@ -13,11 +13,7 @@ import re
 import datetime
 import pymysql
 
-# Variable initialization
-CONSUMER_KEY = "y6SvS9b1e0NnYjVIybDqOI827"
-CONSUMER_SECRET = "aCFD7Byf1dlAggt3rHHfz9xhzS66JdKZpHjwmaSNJYi3BVLVMz"
-ACCESS_TOKEN = "1191910662-EDY4wBHJ5jvOD2LBP8yttWL1XxHLifgCV2buhLx"
-ACCESS_SECRET = "8ucsX5TsoJAbQNDgb0B79ciPMQ6ON6zBIHohUzHCgQitW"
+from credentials import *
 
 # API Authentication
 auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
@@ -66,7 +62,7 @@ def stem(text):
     return StemmerFactory().create_stemmer().stem(text)
 
 # DB Connection
-connection = pymysql.connect(user="nurul", password="nurul", host="127.0.0.1", database="socialmedia", charset='utf8')
+connection = pymysql.connect(user=DB_USERNAME, password=DB_PASSWORD, host=DB_HOSTNAME, database=DB_NAME, charset='utf8')
 cursor_ddl = connection.cursor()
 cursor_dml = connection.cursor()
 

@@ -7,8 +7,10 @@ import sys
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
+from credentials import DB_HOSTNAME, DB_NAME, DB_PASSWORD, DB_USERNAME
+
 # DB connection
-connection = pymysql.connect(user="nurul", password="nurul", host="127.0.0.1", database="socialmedia", charset='utf8')
+connection = pymysql.connect(user=DB_USERNAME, password=DB_PASSWORD, host=DB_HOSTNAME, database=DB_NAME, charset='utf8')
 cursor_ddl = connection.cursor()
 cursor_dml = connection.cursor()
 
