@@ -25,7 +25,7 @@ class SimilarityController extends Controller
             $operand = '<=';
         }
 
-        $batches = Similarity::orderBy('batch','desc')->select('batch')->distinct()->get();
+        $batches = Similarity::orderBy('batch','desc')->select('batch')->distinct()->take(50)->get();
         $similarities = Similarity::where('batch', $batch)
                                     ->where('similarity', '>=', 0.5)
                                     ->where('similarity', $operand, 1)
