@@ -13,6 +13,8 @@ yarn-error.log
 .env
 .phpunit.result.cache
 
+composer.lock
+
 /py_script/normalize_words.txt
 /py_script/local/*
 /py_script/credentials.py
