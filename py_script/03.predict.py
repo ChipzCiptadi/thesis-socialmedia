@@ -30,23 +30,25 @@ query = """
 """
 df = pd.read_sql(query, connection)
 
+if df.shape[0] > 0:
+    print('Extracting features using TF-IDF')
+    X = vectorizer.transform(df.full_text_clean)
 
-print('Extracting features using TF-IDF')
-X = vectorizer.transform(df.full_text_clean)
 
+    print('Predicting class')
+    y_pred = clf.predict(X)
+    df_predicted = pd.concat([df, pd.Series(y_pred, name="prediction")], axis=1, ignore_index=True)
+    print(df_predicted)
 
-print('Predicting class')
-y_pred = clf.predict(X)
-df_predicted = pd.concat([df, pd.Series(y_pred, name="prediction")], axis=1, ignore_index=True)
-print(df_predicted)
+    print('Insert prediction to DB')
+    cursor = connection.cursor()
+    for index, row in df_predicted.iterrows():
+        query = "UPDATE similarities SET prediction=%s WHERE id=%s"
+        cursor.execute(query, (row[2], row[0]))
 
-print('Insert prediction to DB')
-cursor = connection.cursor()
-for index, row in df_predicted.iterrows():
-    query = "UPDATE similarities SET prediction=%s WHERE id=%s"
-    cursor.execute(query, (row[2], row[0]))
-
-connection.commit()
+    connection.commit()
+else:
+    print('No data')
 
 print('Closing connection')
 cursor.close()
