@@ -10,7 +10,8 @@ from credentials import DB_HOSTNAME, DB_NAME, DB_USERNAME, DB_PASSWORD
 
 
 print('Loading model.pkl')
-vectorizer, clf = pickle.load('model.pkl')
+with open('model.pkl', 'r') as f:
+    vectorizer, clf = pickle.load(f)
 
 
 print('Loading tweets with similarity >= 0.5 and < 1')
