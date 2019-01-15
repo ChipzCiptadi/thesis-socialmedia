@@ -27,3 +27,5 @@ Route::post('/normalization', 'NormalizationController@store');
 Route::get('/normalization', 'NormalizationController@index');
 
 Route::get('/similarity', 'SimilarityController@index');
+
+Route::get('/prediction', 'PredictionController@index');

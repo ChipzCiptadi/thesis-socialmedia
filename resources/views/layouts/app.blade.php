@@ -28,6 +28,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/similarity">Similarity</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/prediction">Prediction</a>
+                </li>
             </ul>
         </div>
     </nav>
