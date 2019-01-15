@@ -29,3 +29,4 @@ Route::get('/normalization', 'NormalizationController@index');
 Route::get('/similarity', 'SimilarityController@index');
 
 Route::get('/prediction', 'PredictionController@index');
+Route::get('/prediction/{batch}', 'PredictionController@view');
