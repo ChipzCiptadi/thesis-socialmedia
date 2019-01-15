@@ -25,7 +25,8 @@ query = """
         SELECT batch FROM similarities ORDER BY batch DESC LIMIT 1
     ) as last_batch ON last_batch.batch=similarities.batch
     WHERE 
-        similarity >= 0.5 AND similarity < 1.0
+        similarity >= 0.5 AND similarity < 1.0 AND
+        prediction IS NULL
 """
 df = pd.read_sql(query, connection)
 
