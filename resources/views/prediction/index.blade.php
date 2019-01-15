@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Similarity')
+@section('title', 'Prediction')
 
 @section('content')
 <h1>Prediction</h1>

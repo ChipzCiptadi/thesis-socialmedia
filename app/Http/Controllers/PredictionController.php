@@ -17,11 +17,20 @@ class PredictionController extends Controller
         ]);
     }
 
-    public function view($batch)
+    public function view(Request $request, $batch)
     {
-        $data = Similarity::where('batch', $batch)->get();
+        $show_exact = $request->input('show_exact');
+        $operand = '<';
+        if ($show_exact != null && $show_exact == 'on')
+        {
+            $operand = '<=';
+        }
+
+        $data = Similarity::where('batch', $batch)->where('similarity', $operand, '1.0')->get();
+
         return view('prediction.view', [
             'batch' => $batch,
+            'show_exact' => $show_exact,
             'data' => $data
         ]);
     }
