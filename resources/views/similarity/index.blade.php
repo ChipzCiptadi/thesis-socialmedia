@@ -47,7 +47,6 @@
                 <th>Tweet ID</th>
                 <th>Tweet ID compared</th>
                 <th>Similarity</th>
-                <th>Prediction</th>
             </tr>
         </thead>
         <tbody>
@@ -58,7 +57,7 @@
             @foreach ($similarities as $similarity)
                 @if ($last_tweet_id != $similarity->first_tweet_id)
                     <tr class="table-primary">
-                        <td colspan="5"></td>
+                        <td colspan="4"></td>
                     </tr>
                     @php
                         $last_tweet_id = $similarity->first_tweet_id
@@ -69,7 +68,6 @@
                     <td><abbr title="{{ $similarity->first_tweet->full_text_clean }}">{{ $similarity->first_tweet_id }}</abbr></td>
                     <td><abbr title="{{ $similarity->second_tweet->full_text_clean }}">{{ $similarity->second_tweet_id }}</abbr></td>
                     <td>{{ $similarity->similarity }}</td>
-                    <td>{{ $similarity->prediction }}</td>
                 </tr>
             @endforeach
         </tbody>

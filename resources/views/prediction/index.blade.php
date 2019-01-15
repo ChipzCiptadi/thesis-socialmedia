@@ -33,7 +33,7 @@
     <tbody>
     @foreach ($pivot as $row)
         <tr>
-            <td>{{ $row['batch'] }}</td>
+            <td><a href="/prediction/{{ $row['batch'] }}" target="_blank">{{ $row['batch'] }}</a></td>
             <td>{{ $row['news'] }}</td>
             <td>{{ $row['entertainment'] }}</td>
             <td>{{ $row['health'] }}</td>
